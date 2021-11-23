@@ -1,3 +1,4 @@
+const uuid = require("uuid");
 const express = require("express");
 const mongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
@@ -31,17 +32,47 @@ mongoClient.connect(url, (err, db) => {
     const ratingcollection = database.collection("ratings");
     const usercollection = database.collection("users");
 
-    app.post("/signup", (req, res) => {
-      console.log("signup clicked");
-      console.log(req.body);
+    app.post("/register", (req, res) => {
+      var userid = uuid.v4();
+      const user = {
+        userId: userid,
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        contactNo: req.body.contactNo,
+        physicalCondition: req.body.physicalCondition,
+        dietary: req.body.dietary,
+      };
+
+      const userlogin = {
+        userId: userid,
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        type: 3,
+      };
+
+      usercollection.insertOne(user, (err, result) => {
+        if (err) {
+          res.send(err);
+        } else {
+          logincollection.insertOne(userlogin, (err, result) => {
+            if (err) {
+              res.send(err);
+            } else {
+              console.log("New User Saved Successfull");
+              res.status(200).send(JSON.stringify(userlogin));
+            }
+          });
+          console.log("New User Saved Successfull");
+        }
+      });
     });
 
     app.post("/loginapp", (req, res) => {
       logincollection.findOne({ email: req.body.email }, (err, user) => {
         if (user) {
           if (req.body.password === user.password) {
-            //res.send({ message: "Login Successfull", user: user });
-
             res.status(200).send(JSON.stringify(user));
             console.log("Login Successfull");
           } else {
@@ -109,7 +140,7 @@ mongoClient.connect(url, (err, db) => {
 
         const restaurantuser = {
           userId: req.body.storeId,
-          username: req.body.storeName,
+          name: req.body.storeName,
           email: req.body.email,
           password: password,
           type: 2,
