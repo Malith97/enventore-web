@@ -6,6 +6,9 @@ var multer = require("multer");
 const cors = require("cors");
 const XLSX = require("xlsx");
 const path = require("path");
+const fastcsv = require("fast-csv");
+const fs = require("fs");
+const Json2csvParser = require("json2csv").Parser;
 var generator = require("generate-password");
 
 const app = express();
@@ -227,47 +230,71 @@ mongoClient.connect(url, (err, db) => {
       var ratingbook = XLSX.utils.book_new();
       var tagbook = XLSX.utils.book_new();
 
-      dishcollection.find().toArray((disherr, dishdata) => {
-        if (disherr) {
-          console.log(disherr);
-        } else {
-          var tempdish = JSON.stringify(dishdata);
-          tempdish = JSON.parse(tempdish);
-          var dishsheet = XLSX.utils.json_to_sheet(tempdish);
-          var downdish = __dirname + "/public/dishes.xlsx";
-          XLSX.utils.book_append_sheet(dishbook, dishsheet, "sheet1");
-          XLSX.writeFile(dishbook, downdish);
-          res.download(downdish);
-        }
-      });
+      dishcollection
+        .find({})
+        .project({
+          _id: 0,
+          dishId: 1,
+          dishName: 1,
+          genre: 1,
+        })
+        .toArray((disherr, dishdata) => {
+          if (disherr) {
+            console.log(disherr);
+          } else {
+            const json2csvParser = new Json2csvParser({ header: true });
+            const csvData = json2csvParser.parse(dishdata);
 
-      ratingcollection.find().toArray((ratingerr, ratingdata) => {
-        if (ratingerr) {
-          console.log(ratingerr);
-        } else {
-          var temprating = JSON.stringify(ratingdata);
-          temprating = JSON.parse(temprating);
-          var ratingsheet = XLSX.utils.json_to_sheet(temprating);
-          var downratings = __dirname + "/public/ratings.xlsx";
-          XLSX.utils.book_append_sheet(ratingbook, ratingsheet, "sheet2");
-          XLSX.writeFile(ratingbook, downratings);
-          res.download(downratings);
-        }
-      });
+            var tempdowndish = __dirname + "/public/dishes.csv";
+            fs.writeFile(tempdowndish, csvData, function (error) {
+              if (error) throw error;
+            });
+          }
+        });
 
-      tagscollection.find().toArray((tagerr, tagdata) => {
-        if (tagerr) {
-          console.log(tagerr);
-        } else {
-          var temptag = JSON.stringify(tagdata);
-          temptag = JSON.parse(temptag);
-          var tagsheet = XLSX.utils.json_to_sheet(temptag);
-          var downtags = __dirname + "/public/tags.xlsx";
-          XLSX.utils.book_append_sheet(tagbook, tagsheet, "sheet3");
-          XLSX.writeFile(tagbook, downtags);
-          res.download(downtags);
-        }
-      });
+      ratingcollection
+        .find({})
+        .project({
+          _id: 0,
+          userId: 1,
+          dishId: 1,
+          rating: 1,
+          timestamp: 1,
+        })
+        .toArray((ratingerr, ratingdata) => {
+          if (ratingerr) {
+            console.log(ratingerr);
+          } else {
+            const json2csvParser = new Json2csvParser({ header: true });
+            const csvData = json2csvParser.parse(ratingdata);
+            var downratings = __dirname + "/public/ratings.csv";
+            fs.writeFile(downratings, csvData, function (ratingerr) {
+              if (ratingerr) throw ratingerr;
+            });
+          }
+        });
+
+      tagscollection
+        .find({})
+        .project({
+          _id: 0,
+          userId: 1,
+          dishId: 1,
+          tag: 1,
+          timestamp: 1,
+        })
+        .toArray((tagerr, tagdata) => {
+          if (tagerr) {
+            console.log(tagerr);
+          } else {
+            const json2csvParser = new Json2csvParser({ header: true });
+            const csvData = json2csvParser.parse(tagdata);
+            var downtags = __dirname + "/public/tags.csv";
+            fs.writeFile(downtags, csvData, function (tagerr) {
+              if (tagerr) throw tagerr;
+            });
+          }
+        });
     });
   }
 });
