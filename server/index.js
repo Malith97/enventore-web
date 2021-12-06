@@ -4,6 +4,7 @@ const mongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
 var multer = require("multer");
 const cors = require("cors");
+const csv = require("csv-parser");
 const XLSX = require("xlsx");
 const path = require("path");
 const fs = require("fs");
@@ -35,6 +36,7 @@ mongoClient.connect(url, (err, db) => {
     const usercollection = database.collection("users");
     const complaintcollection = database.collection("complaints");
     const ordercollection = database.collection("orders");
+    const recommendationcollection = database.collection("recommendations");
 
     app.post("/register", (req, res) => {
       var userid = uuid.v4();
@@ -329,6 +331,44 @@ mongoClient.connect(url, (err, db) => {
           res.send(results);
         }
       });
+    });
+
+    app.post("/readdata", (req, res) => {
+      let results = [];
+      var readPath = __dirname + "/public/dish_recommendation.csv";
+
+      fs.createReadStream(readPath)
+        .pipe(csv())
+        .on("data", (data) => results.push(data))
+        .on("end", () => {
+          for (var i = 0; i < results.length; i++) {
+            var str = results[i].food_recommendation;
+            var newView = str.replace(/\s/g, "");
+            let recList = newView
+              .replace("[", "")
+              .replace("]", "")
+              .split(",")
+              .map(String);
+            recList.forEach(function (entry) {
+              const recommendation = {
+                userId: results[i].user,
+                dishId: entry,
+              };
+
+              recommendationcollection.insertOne(
+                recommendation,
+                (err, result) => {
+                  if (err) {
+                    res.send(err);
+                  } else {
+                    console.log("recommendations added");
+                  }
+                }
+              );
+              console.log(recommendation);
+            });
+          }
+        });
     });
 
     app.post("/exportdata", (req, res) => {
