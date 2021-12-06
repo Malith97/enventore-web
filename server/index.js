@@ -6,7 +6,6 @@ var multer = require("multer");
 const cors = require("cors");
 const XLSX = require("xlsx");
 const path = require("path");
-const fastcsv = require("fast-csv");
 const fs = require("fs");
 const Json2csvParser = require("json2csv").Parser;
 var generator = require("generate-password");
@@ -34,6 +33,8 @@ mongoClient.connect(url, (err, db) => {
     const tagscollection = database.collection("tags");
     const ratingcollection = database.collection("ratings");
     const usercollection = database.collection("users");
+    const complaintcollection = database.collection("complaints");
+    const ordercollection = database.collection("orders");
 
     app.post("/register", (req, res) => {
       var userid = uuid.v4();
@@ -89,6 +90,99 @@ mongoClient.connect(url, (err, db) => {
       });
     });
 
+    app.get("/loadFoods", async (req, res) => {
+      dishcollection
+        .find({})
+        .project({
+          _id: 0,
+          __v: 0,
+          type: 0,
+        })
+        .toArray((err, results) => {
+          if (err) {
+            console.log(err);
+            res.send(err);
+          } else {
+            console.log("API called and Successfull");
+            res.status(200).send(JSON.stringify(results));
+          }
+        });
+    });
+
+    app.post("/order", (req, res) => {
+      var count = Object.keys(req.body.orderList).length;
+      var ordersList = [];
+      ordersList = req.body.orderList;
+
+      for (let i = 0; i < count; i++) {
+        const order = {
+          orderId: uuid.v4(),
+          userId: ordersList[i].userId,
+          dishId: ordersList[i].product.dishId,
+          dishName: ordersList[i].product.dishName,
+          storeId: ordersList[i].product.storeId,
+          dishPicture: ordersList[i].product.dishPicture,
+          quantity: ordersList[i].quantity,
+          rated: false,
+        };
+
+        ordercollection.insertOne(order, (err, result) => {
+          if (err) {
+            res.send(err);
+          } else {
+            console.log("Order is Placed Successfully");
+          }
+        });
+      }
+      console.log("All Orders are Placed Successfully");
+      res.status(200).send();
+    });
+
+    app.post("/rateFood", (req, res) => {
+      var upOrderId = req.body.review.orderId;
+
+      const rate = {
+        userId: req.body.review.userId,
+        dishId: req.body.review.dishId,
+        rating: req.body.review.rating,
+      };
+
+      ratingcollection.insertOne(rate, (err, result) => {
+        if (err) {
+          res.send(err);
+        } else {
+          ordercollection.updateOne(
+            { orderId: upOrderId },
+            { $set: { rated: true } },
+            (err, result) => {
+              if (err) {
+                console.log("update rating collection failed");
+              } else {
+                console.log("changed order collection passed");
+              }
+            }
+          );
+
+          console.log("Rated Successfull");
+          res.status(200).send(JSON.stringify(result));
+        }
+      });
+    });
+
+    app.post("/getOrders", async (req, res) => {
+      ordercollection
+        .find({ userId: req.body.userId, rated: false })
+        .toArray((err, results) => {
+          if (err) {
+            console.log(err);
+            res.send(err);
+          } else {
+            console.log("Got Previous Orders");
+            res.status(200).send(JSON.stringify(results));
+          }
+        });
+    });
+
     app.post("/login", (req, res) => {
       const { email, password } = req.body;
       logincollection.findOne({ email: email }, (err, user) => {
@@ -109,7 +203,8 @@ mongoClient.connect(url, (err, db) => {
 
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
-        cb(null, "./../client/public/images/restaurants");
+        cb(null, "./public/images/restaurants");
+        // cb(null, "./../client/public/images/restaurants");
       },
       filename: function (req, file, cb) {
         cb(null, Date.now() + "-" + file.originalname);
@@ -198,7 +293,18 @@ mongoClient.connect(url, (err, db) => {
         if (err) {
           res.send(err);
         } else {
-          res.send(result);
+          res.send(results);
+        }
+      });
+    });
+
+    app.get("/viewcomplaints", async (req, res) => {
+      const storeId = req.query.storeId;
+      complaintcollection.find({}).toArray((err, results) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(results);
         }
       });
     });
