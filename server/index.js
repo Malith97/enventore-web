@@ -185,6 +185,35 @@ mongoClient.connect(url, (err, db) => {
         });
     });
 
+    app.post("/getRecFoods", async (req, res) => {
+      recommendationcollection
+        .find({ userId: req.body.userId })
+        .project({
+          _id: 0,
+          userId: 0,
+        })
+        .toArray((err, results) => {
+          if (err) {
+            console.log(err);
+          } else {
+            var dishArr = [];
+            results.forEach(function (dish) {
+              dishArr.push(dish.dishId);
+            });
+
+            dishcollection
+              .find({ dishId: { $in: dishArr } })
+              .toArray((err, results) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.status(200).send(JSON.stringify(results));
+                }
+              });
+          }
+        });
+    });
+
     app.post("/login", (req, res) => {
       const { email, password } = req.body;
       logincollection.findOne({ email: email }, (err, user) => {
@@ -349,6 +378,7 @@ mongoClient.connect(url, (err, db) => {
               .replace("]", "")
               .split(",")
               .map(String);
+
             recList.forEach(function (entry) {
               const recommendation = {
                 userId: results[i].user,
@@ -368,6 +398,7 @@ mongoClient.connect(url, (err, db) => {
               console.log(recommendation);
             });
           }
+          res.send({ message: "Recommendations Added Successful" });
         });
     });
 
