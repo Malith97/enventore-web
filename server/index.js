@@ -10,6 +10,8 @@ const path = require("path");
 const fs = require("fs");
 const Json2csvParser = require("json2csv").Parser;
 var generator = require("generate-password");
+const { exec } = require("child_process");
+var { PythonShell } = require("python-shell");
 
 const app = express();
 app.use(express.json());
@@ -234,7 +236,7 @@ mongoClient.connect(url, (err, db) => {
 
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
-        cb(null, "./public/images/restaurants");
+        cb(null, "./public");
         // cb(null, "./../client/public/images/restaurants");
       },
       filename: function (req, file, cb) {
@@ -380,9 +382,11 @@ mongoClient.connect(url, (err, db) => {
               .map(String);
 
             recList.forEach(function (entry) {
+              var newdishId = entry.replace("'", "").replace("'", "");
+              console.log(newdishId);
               const recommendation = {
                 userId: results[i].user,
-                dishId: entry,
+                dishId: newdishId,
               };
 
               recommendationcollection.insertOne(
@@ -395,7 +399,6 @@ mongoClient.connect(url, (err, db) => {
                   }
                 }
               );
-              console.log(recommendation);
             });
           }
           res.send({ message: "Recommendations Added Successful" });
