@@ -199,19 +199,62 @@ mongoClient.connect(url, (err, db) => {
             console.log(err);
           } else {
             var dishArr = [];
-            results.forEach(function (dish) {
-              dishArr.push(dish.dishId);
-            });
 
-            dishcollection
-              .find({ dishId: { $in: dishArr } })
-              .toArray((err, results) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  res.status(200).send(JSON.stringify(results));
-                }
+            //cold start issue
+            if (results.length <= 0) {
+              dishcollection
+                .find({})
+                .project({
+                  _id: 0,
+                  __v: 0,
+                  type: 0,
+                })
+                .toArray((err, results) => {
+                  if (err) {
+                    console.log(err);
+                    res.send(err);
+                  } else {
+                    var dishIdt = [];
+                    var count = Object.keys(results).length;
+                    for (let i = 0; i < count; i++) {
+                      var dishId = results[i].dishId;
+                      dishIdt.push(dishId);
+                    }
+
+                    var selected = [];
+                    selected = dishIdt
+                      .sort(() => Math.random() - Math.random())
+                      .slice(0, 8);
+
+                    dishcollection
+                      .find({ dishId: { $in: selected } })
+                      .toArray((err, results) => {
+                        if (err) {
+                          console.log(err);
+                        } else {
+                          res.status(200).send(JSON.stringify(results));
+                        }
+                      });
+                  }
+                });
+              console.log("Cold Start User");
+            } else {
+              results.forEach(function (dish) {
+                dishArr.push(dish.dishId);
               });
+
+              dishcollection
+                .find({ dishId: { $in: dishArr } })
+                .toArray((err, results) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    res.status(200).send(JSON.stringify(results));
+                  }
+                });
+              // res.send({ message: "Recommended Dishes are sent to frontEnd" });
+              console.log("Get Recommended Foods");
+            }
           }
         });
     });
@@ -427,7 +470,11 @@ mongoClient.connect(url, (err, db) => {
 
             var tempdowndish = __dirname + "/public/dishes.csv";
             fs.writeFile(tempdowndish, csvData, function (error) {
-              if (error) throw error;
+              if (error) {
+                console.log("Error Exporting Dish Collection");
+              } else {
+                console.log("Dish Collection Exported");
+              }
             });
           }
         });
@@ -449,7 +496,11 @@ mongoClient.connect(url, (err, db) => {
             const csvData = json2csvParser.parse(ratingdata);
             var downratings = __dirname + "/public/ratings.csv";
             fs.writeFile(downratings, csvData, function (ratingerr) {
-              if (ratingerr) throw ratingerr;
+              if (error) {
+                console.log("Error Exporting Ratings Collection");
+              } else {
+                console.log("Ratings Collection Exported");
+              }
             });
           }
         });
@@ -471,10 +522,16 @@ mongoClient.connect(url, (err, db) => {
             const csvData = json2csvParser.parse(tagdata);
             var downtags = __dirname + "/public/tags.csv";
             fs.writeFile(downtags, csvData, function (tagerr) {
-              if (tagerr) throw tagerr;
+              if (error) {
+                console.log("Error Exporting Tags Collection");
+              } else {
+                console.log("Tags Collection Exported");
+              }
             });
           }
         });
+
+      res.send({ message: "Data Exported" });
     });
   }
 });
