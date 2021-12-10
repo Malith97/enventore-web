@@ -2,6 +2,7 @@ import React from "react";
 import RestNavbar from "../components/RestNavbar";
 import Header from "../components/Header";
 import { withRouter } from "react-router-dom";
+import { Chart } from "react-google-charts";
 
 const RestHome = () => {
   return (
@@ -21,10 +22,10 @@ const RestHome = () => {
                       <div className="flex flex-wrap">
                         <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                           <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                            Traffic
+                            Total Number Dishes
                           </h5>
                           <span className="font-semibold text-xl text-blueGray-700">
-                            350,897
+                            116
                           </span>
                         </div>
                         <div className="relative w-auto pl-4 flex-initial">
@@ -35,10 +36,10 @@ const RestHome = () => {
                       </div>
                       <p className="text-sm text-blueGray-400 mt-4">
                         <span className="text-emerald-500 mr-2">
-                          <i className="fas fa-arrow-up"></i> 3.48%
+                          <i className="fas fa-arrow-up"></i> 34%
                         </span>
                         <span className="whitespace-nowrap">
-                          Since last month
+                          Than Last Week
                         </span>
                       </p>
                     </div>
@@ -50,10 +51,10 @@ const RestHome = () => {
                       <div className="flex flex-wrap">
                         <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                           <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                            New users
+                            No of Users
                           </h5>
                           <span className="font-semibold text-xl text-blueGray-700">
-                            2,356
+                            35
                           </span>
                         </div>
                         <div className="relative w-auto pl-4 flex-initial">
@@ -64,10 +65,10 @@ const RestHome = () => {
                       </div>
                       <p className="text-sm text-blueGray-400 mt-4">
                         <span className="text-red-500 mr-2">
-                          <i className="fas fa-arrow-down"></i> 3.48%
+                          <i className="fas fa-arrow-down"></i> 14%
                         </span>
                         <span className="whitespace-nowrap">
-                          Since last week
+                          Than Last Month
                         </span>
                       </p>
                     </div>
@@ -79,10 +80,10 @@ const RestHome = () => {
                       <div className="flex flex-wrap">
                         <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                           <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                            Sales
+                            Nu of Restaurants
                           </h5>
                           <span className="font-semibold text-xl text-blueGray-700">
-                            924
+                            11
                           </span>
                         </div>
                         <div className="relative w-auto pl-4 flex-initial">
@@ -93,10 +94,10 @@ const RestHome = () => {
                       </div>
                       <p className="text-sm text-blueGray-400 mt-4">
                         <span className="text-orange-500 mr-2">
-                          <i className="fas fa-arrow-down"></i> 1.10%
+                          <i className="fas fa-arrow-down"></i> 40%
                         </span>
                         <span className="whitespace-nowrap">
-                          Since yesterday
+                          Than Last Month
                         </span>
                       </p>
                     </div>
@@ -108,10 +109,10 @@ const RestHome = () => {
                       <div className="flex flex-wrap">
                         <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                           <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                            Performance
+                            Next Cycle
                           </h5>
                           <span className="font-semibold text-xl text-blueGray-700">
-                            49,65%
+                            12.00 AM
                           </span>
                         </div>
                         <div className="relative w-auto pl-4 flex-initial">
@@ -124,9 +125,7 @@ const RestHome = () => {
                         <span className="text-emerald-500 mr-2">
                           <i className="fas fa-arrow-up"></i> 12%
                         </span>
-                        <span className="whitespace-nowrap">
-                          Since last month
-                        </span>
+                        <span className="whitespace-nowrap">Upgrade Time</span>
                       </p>
                     </div>
                   </div>
@@ -138,13 +137,13 @@ const RestHome = () => {
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <div className="flex flex-wrap"></div>
           <div className="flex flex-wrap mt-4">
-            <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+            <div className="w-full xl:w-1/2 mb-12 xl:mb-0 px-4">
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                   <div className="flex flex-wrap items-center">
                     <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                       <h3 className="font-semibold text-base text-blueGray-700">
-                        Page visits
+                        Yesterday Orders
                       </h3>
                     </div>
                     <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -164,93 +163,93 @@ const RestHome = () => {
                     <thead>
                       <tr>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Page name
+                          User Name
                         </th>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Visitors
+                          Location
                         </th>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Unique users
+                          DishId
                         </th>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Bounce rate
+                          Quantity
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          /argon/
+                          Ishanka Denipitiya
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          4,569
+                          Piliyandala
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          340
+                          Spisy Chicken Pizza
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                          46,53%
+                          1
                         </td>
                       </tr>
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          /argon/index.html
+                          Aditha Iddamalgoda
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          3,985
+                          Panadura
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          319
+                          Magarrito
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <i className="fas fa-arrow-down text-orange-500 mr-4"></i>
-                          46,53%
+                          2
                         </td>
                       </tr>
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          /argon/charts.html
+                          Kalpani Vijithasena
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          3,513
+                          Kadawatha
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          294
+                          Cheese Pizza
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <i className="fas fa-arrow-down text-orange-500 mr-4"></i>
-                          36,49%
+                          1
                         </td>
                       </tr>
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          /argon/tables.html
+                          Varsha Jayawardana
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          2,050
+                          Wadduwa
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          147
+                          Carammel Mousse
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                          50,87%
+                          4
                         </td>
                       </tr>
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          /argon/profile.html
+                          Pasindu Sandima
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          1,795
+                          Aluthgama
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          190
+                          Cheese Burger
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <i className="fas fa-arrow-down text-red-500 mr-4"></i>
-                          46,53%
+                          2
                         </td>
                       </tr>
                     </tbody>
@@ -258,13 +257,13 @@ const RestHome = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full xl:w-4/12 px-4">
+            <div className="w-full xl:w-1/2 px-4">
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                   <div className="flex flex-wrap items-center">
                     <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                       <h3 className="font-semibold text-base text-blueGray-700">
-                        Social traffic
+                        Overview
                       </h3>
                     </div>
                     <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -280,129 +279,35 @@ const RestHome = () => {
                 </div>
                 <div className="block w-full overflow-x-auto">
                   {/* Projects table */}
-                  <table className="items-center w-full bg-transparent border-collapse">
-                    <thead className="thead-light">
-                      <tr>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Referral
-                        </th>
-                        <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Visitors
-                        </th>
-                        <th
-                          className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-                          style={{ minWidth: "140px" }}
-                        ></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          Facebook
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          1,480
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <div className="flex items-center">
-                            <span className="mr-2">60%</span>
-                            <div className="relative w-full">
-                              <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                <div
-                                  style={{ width: "60%" }}
-                                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          Facebook
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          5,480
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <div className="flex items-center">
-                            <span className="mr-2">70%</span>
-                            <div className="relative w-full">
-                              <div className="overflow-hidden h-2 text-xs flex rounded bg-emerald-200">
-                                <div
-                                  style={{ width: "70%" }}
-                                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          Google
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          4,807
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <div className="flex items-center">
-                            <span className="mr-2">80%</span>
-                            <div className="relative w-full">
-                              <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
-                                <div
-                                  style={{ width: "80%" }}
-                                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          Instagram
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          3,678
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <div className="flex items-center">
-                            <span className="mr-2">75%</span>
-                            <div className="relative w-full">
-                              <div className="overflow-hidden h-2 text-xs flex rounded bg-lightBlue-200">
-                                <div
-                                  style={{ width: "75%" }}
-                                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-lightBlue-500"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                          twitter
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          2,645
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <div className="flex items-center">
-                            <span className="mr-2">30%</span>
-                            <div className="relative w-full">
-                              <div className="overflow-hidden h-2 text-xs flex rounded bg-orange-200">
-                                <div
-                                  style={{ width: "30%" }}
-                                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <Chart
+                    className="h-full"
+                    chartType="LineChart"
+                    loader={<div>Loading Chart</div>}
+                    data={[
+                      ["x", "Orders"],
+                      [0, 1],
+                      [1, 4],
+                      [2, 3],
+                      [3, 5],
+                      [4, 4],
+                      [5, 7],
+                      [6, 12],
+                      [7, 8],
+                      [8, 11],
+                      [9, 14],
+                      [10, 12],
+                      [11, 15],
+                    ]}
+                    options={{
+                      hAxis: {
+                        title: "Date",
+                      },
+                      vAxis: {
+                        title: "No Of Orders",
+                      },
+                    }}
+                    rootProps={{ "data-testid": "1" }}
+                  />
                 </div>
               </div>
             </div>

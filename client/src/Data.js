@@ -68,4 +68,9 @@ export const AdminNavBar = [
     path: "/admin_analytics",
     icon: <GiIcons.GiServerRack />,
   },
+  {
+    title: "Reports",
+    path: "/admin_reports",
+    icon: <GiIcons.GiServerRack />,
+  },
 ];

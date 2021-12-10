@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Axios from "axios";
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from "uuid";
 import Navbar from "../components/RestNavbar";
 import { withRouter } from "react-router-dom";
 
@@ -15,10 +16,12 @@ const AddDish = () => {
   const [dishPrice, setDishPrice] = useState(0);
   const [dishPhoto, setDishPhoto] = useState();
   const [description, setDescription] = useState("");
+  const [genre, setGenre] = useState("");
 
   const addNewDish = async (e) => {
     e.preventDefault();
     const newdishdata = new FormData();
+    newdishdata.append("dishId", uuidv4());
     newdishdata.append("storeId", storeId);
     newdishdata.append("dishName", dishName);
     newdishdata.append("dishCategory", dishCategory);
@@ -28,8 +31,9 @@ const AddDish = () => {
     newdishdata.append("dishPrice", dishPrice);
     newdishdata.append("file", dishPhoto);
     newdishdata.append("description", description);
+    newdishdata.append("genre", genre);
 
-    Axios.post("http://localhost:3001/addNewDish", newdishdata)
+    Axios.post("http://3.144.145.92:3001/addNewDish", newdishdata)
       .then((e) => {
         Swal.fire({
           title: "Restaurant Added Successful!",
@@ -139,7 +143,9 @@ const AddDish = () => {
                               }}
                               className="mt-1 focus:ring-green-500 focus:border-green-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 bg-gray-100"
                             >
-                              <option disabled>Choose Food Category</option>
+                              <option disabled selected>
+                                Choose Food Category
+                              </option>
                               <option value="1">
                                 breads, cereals, rice, pasta, noodles and other
                                 grains
@@ -262,6 +268,25 @@ const AddDish = () => {
                               }}
                               required
                               className="w-full bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            />
+                          </div>
+
+                          <div className="col-span-6 sm:col-span-6">
+                            <label
+                              htmlFor="country"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Genre
+                            </label>
+                            <input
+                              type="textarea"
+                              name="genre"
+                              id="genre"
+                              onChange={(e) => {
+                                setGenre(e.target.value);
+                              }}
+                              required
+                              className="mt-1 focus:ring-green-500 focus:border-green-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 bg-gray-100"
                             />
                           </div>
 

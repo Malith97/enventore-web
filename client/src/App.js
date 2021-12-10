@@ -18,6 +18,10 @@ import LoginPage from "./pages/LoginPage";
 import RestHome from "./pages/RestHome";
 import AddDish from "./pages/AddDish";
 import ViewDishes from "./pages/ViewDishes";
+import AdminAnalytics from "./pages/AdminAnalytics";
+import RestUserComplaints from "./pages/RestUserComplaints";
+import RestAnalytics from "./pages/RestAnalytics";
+import AdminReports from "./pages/AdminReports";
 
 const App = () => {
   const [user, setLoginUser] = useState({});
@@ -32,11 +36,15 @@ const App = () => {
         <Route path="/user_complaints" component={UserComplaints} />
         <Route path="/view_users" component={ViewUsers} />
         <Route path="/available_dishes" component={AvailableDishes} />
+        <Route path="/admin_analytics" component={AdminAnalytics} />
+        <Route path="/admin_reports" component={AdminReports} />
       </Switch>
       <Switch>
         <Route path="/restdashboard" component={RestHome} />
         <Route path="/add_dish" component={AddDish} />
         <Route path="/view_dishes" component={ViewDishes} />
+        <Route path="/rest_user_complaints" component={RestUserComplaints} />
+        <Route path="/rest_analytics" component={RestAnalytics} />
       </Switch>
     </Router>
   );

@@ -66,39 +66,40 @@ const AdminAnalytics = () => {
                 <div>
                   <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                     <Chart
+                      width={"400px"}
+                      height={"400px"}
                       chartType="PieChart"
                       loader={<div>Loading Chart</div>}
                       data={[
-                        ["Task", "Hours per Day"],
-                        ["Work", 11],
-                        ["Eat", 2],
-                        ["Commute", 2],
-                        ["Watch TV", 2],
-                        ["Sleep", 7],
+                        ["Pizza", "Popularity"],
+                        ["Vegetarian", 6],
+                        ["Vegan", 8],
+                        ["None", 11],
                       ]}
                       options={{
-                        title: "Overall Users",
-                        is3D: true,
+                        title: "Users Overview",
+                        sliceVisibilityThreshold: 0.2, // 20%
                       }}
-                      rootProps={{ "data-testid": "2" }}
+                      rootProps={{ "data-testid": "7" }}
                     />
                   </div>
                 </div>
                 <div>
                   <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                     <Chart
+                      width={"400px"}
+                      height={"400px"}
                       chartType="PieChart"
                       loader={<div>Loading Chart</div>}
                       data={[
                         ["Task", "Hours per Day"],
-                        ["Work", 11],
-                        ["Eat", 2],
-                        ["Commute", 2],
-                        ["Watch TV", 2],
-                        ["Sleep", 7],
+                        ["Admins", 1],
+                        ["Restaurants", 10],
+                        ["Users", 11],
+                        ["Dishes", 75],
                       ]}
                       options={{
-                        title: "My Daily Activities",
+                        title: "Full Picture",
                         // Just add this option
                         is3D: true,
                       }}
@@ -114,26 +115,26 @@ const AdminAnalytics = () => {
                       chartType="LineChart"
                       loader={<div>Loading Chart</div>}
                       data={[
-                        ["x", "dogs"],
+                        ["x", "Users"],
                         [0, 0],
-                        [1, 10],
-                        [2, 23],
-                        [3, 17],
-                        [4, 18],
-                        [5, 9],
-                        [6, 11],
-                        [7, 27],
-                        [8, 33],
-                        [9, 40],
-                        [10, 32],
-                        [11, 35],
+                        [1, 1],
+                        [2, 4],
+                        [3, 8],
+                        [4, 9],
+                        [5, 12],
+                        [6, 14],
+                        [7, 18],
+                        [8, 23],
+                        [9, 27],
+                        [10, 28],
+                        [11, 34],
                       ]}
                       options={{
                         hAxis: {
                           title: "Time",
                         },
                         vAxis: {
-                          title: "Popularity",
+                          title: "No of Users",
                         },
                       }}
                       rootProps={{ "data-testid": "1" }}
@@ -143,22 +144,37 @@ const AdminAnalytics = () => {
                 <div>
                   <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                     <Chart
-                      chartType="PieChart"
+                      chartType="BarChart"
                       loader={<div>Loading Chart</div>}
                       data={[
-                        ["Task", "Hours per Day"],
-                        ["Work", 11],
-                        ["Eat", 2],
-                        ["Commute", 2],
-                        ["Watch TV", 2],
-                        ["Sleep", 7],
+                        [
+                          "Element",
+                          "Density",
+                          { role: "style" },
+                          {
+                            sourceColumn: 0,
+                            role: "annotation",
+                            type: "string",
+                            calc: "stringify",
+                          },
+                        ],
+                        ["Spicy", 24, "#73f094", null],
+                        ["Salty", 26, "#fffd6b", null],
+                        ["Dairy", 15, "#699dff", null],
+                        ["Carbs", 29, "#ff66d4", null],
+                        ["Oily", 21, "#b87333", null],
+                        ["Meat", 24, "#ff577e", null],
+                        ["Sugar", 31.45, "#ca57ff", null],
                       ]}
                       options={{
-                        title: "My Daily Activities",
-                        // Just add this option
-                        is3D: true,
+                        title: "Dish Types",
+                        width: 600,
+                        height: 450,
+                        bar: { groupWidth: "95%" },
+                        legend: { position: "none" },
                       }}
-                      rootProps={{ "data-testid": "2" }}
+                      // For tests
+                      rootProps={{ "data-testid": "6" }}
                     />
                   </div>
                 </div>

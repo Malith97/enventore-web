@@ -5,10 +5,15 @@ import Navbar from "../components/RestNavbar";
 import { withRouter } from "react-router-dom";
 
 const ViewDishes = () => {
-  const [dishesList, setDishestList] = useState([]);
+  const [dishesList, setDishesList] = useState([]);
+  const [storeId, setStoreId] = useState(localStorage.getItem("userId"));
+
   useEffect(() => {
-    Axios.get("http://localhost:3001/viewdishes").then((response) => {
-      setDishestList(response.data);
+    Axios.get("http://3.144.145.92:3001/viewdishes", {
+      params: { storeId: storeId },
+    }).then((response) => {
+      console.log(response.data);
+      setDishesList(response.data);
     });
   }, []);
 
@@ -58,19 +63,19 @@ const ViewDishes = () => {
                     >
                       <img
                         className="w-full h-56"
-                        src={`../images/restaurants/${val.storePicture}`}
+                        src={`http://3.144.145.92:3001/${val.dishPicture}`}
                         alt="..."
                       />
 
                       <div className="px-6 py-4">
                         <div className="font-bold text-lg mb-2">
-                          {val.storeName}
+                          {val.dishName}
                         </div>
                         <p className="text-gray-700 text-sm">
                           {val.description}
                         </p>
                         <p className="text-sm font-bold text-green-800 mt-2">
-                          {val.storeCity}
+                          Rs.{val.price}
                         </p>
                       </div>
                     </div>

@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 const ViewRestaurants = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   useEffect(() => {
-    Axios.get("http://localhost:3001/viewrestaurants").then((response) => {
+    Axios.get("http://3.144.145.92:3001/viewrestaurants").then((response) => {
       setRestaurantList(response.data);
     });
   }, []);
@@ -49,7 +49,7 @@ const ViewRestaurants = () => {
             </div>
 
             <div className="w-full xl:w-full mb-12 xl:mb-0 px-4 mt-8">
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 {restaurantList.map((val, key) => {
                   return (
                     <div
@@ -58,7 +58,7 @@ const ViewRestaurants = () => {
                     >
                       <img
                         className="w-full h-56"
-                        src={`../images/restaurants/${val.storePicture}`}
+                        src={`http://3.144.145.92:3001/${val.storePicture}`}
                         alt="..."
                       />
 

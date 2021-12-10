@@ -1,6 +1,20 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Header = () => {
+  const history = useHistory();
+  const logout = () => {
+    localStorage.clear();
+    history.push("/");
+    Swal.fire({
+      title: "You Have Logged Out",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  };
+
   return (
     <>
       {/* Navbar */}
@@ -20,11 +34,12 @@ const Header = () => {
               <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
                 <i className="fas fa-search"></i>
               </span>
-              <input
-                type="text"
-                placeholder="Search here..."
-                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
-              />
+              <button
+                className="border-0 px-3 py-3 bg-green-100 text-blueGray-600 relative rounded text-sm shadow outline-none focus:outline-none focus:ring w-full"
+                onClick={logout}
+              >
+                Logout
+              </button>
             </div>
           </form>
           {/* User */}
@@ -36,4 +51,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

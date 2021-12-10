@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import { withRouter } from "react-router-dom";
+import Axios from "axios";
 import img1 from "../images/designer4pro.jpg";
 
 const AvailableDishes = () => {
+  const [dishesList, setDishesList] = useState([]);
+  useEffect(() => {
+    Axios.get("http://3.144.145.92:3001/viewalldishes").then((response) => {
+      setDishesList(response.data);
+    });
+  }, []);
   return (
     <>
       <Navbar />
@@ -42,76 +49,33 @@ const AvailableDishes = () => {
             </div>
 
             <div className="w-full xl:w-full mb-12 xl:mb-0 px-4 mt-8">
-              <div className="grid grid-cols-5 gap-4">
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img class="w-full" src={img1} alt="Mountain" />
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-lg mb-2">Mom's Kitchen</div>
-                    <p class="text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatibus quia,
-                    </p>
-                    <p className="text-sm font-bold text-green-800 mt-2">
-                      Panadura
-                    </p>
-                  </div>
-                </div>
+              <div className="grid grid-cols-4 gap-4">
+                {dishesList.map((val, key) => {
+                  return (
+                    <div
+                      className="max-w-sm rounded overflow-hidden shadow-lg"
+                      key={key}
+                    >
+                      <img
+                        className="w-full h-56"
+                        src={`http://3.144.145.92:3001/${val.dishPicture}`}
+                        alt="..."
+                      />
 
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img class="w-full" src={img1} alt="Mountain" />
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-lg mb-2">Mom's Kitchen</div>
-                    <p class="text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatibus quia,
-                    </p>
-                    <p className="text-sm font-bold text-green-800 mt-2">
-                      Panadura
-                    </p>
-                  </div>
-                </div>
-
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img class="w-full" src={img1} alt="Mountain" />
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-lg mb-2">Mom's Kitchen</div>
-                    <p class="text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatibus quia,
-                    </p>
-                    <p className="text-sm font-bold text-green-800 mt-2">
-                      Panadura
-                    </p>
-                  </div>
-                </div>
-
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img class="w-full" src={img1} alt="Mountain" />
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-lg mb-2">Mom's Kitchen</div>
-                    <p class="text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatibus quia,
-                    </p>
-                    <p className="text-sm font-bold text-green-800 mt-2">
-                      Panadura
-                    </p>
-                  </div>
-                </div>
-
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img class="w-full" src={img1} alt="Mountain" />
-                  <div class="px-6 py-4">
-                    <div class="font-bold text-lg mb-2">Mom's Kitchen</div>
-                    <p class="text-gray-700 text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatibus quia,
-                    </p>
-                    <p className="text-sm font-bold text-green-800 mt-2">
-                      Panadura
-                    </p>
-                  </div>
-                </div>
+                      <div className="px-6 py-4">
+                        <div className="font-bold text-lg mb-2">
+                          {val.dishName}
+                        </div>
+                        <p className="text-gray-700 text-sm">
+                          {val.description}
+                        </p>
+                        <p className="text-sm font-bold text-green-800 mt-2">
+                          Rs.{val.price}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

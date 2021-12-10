@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import { withRouter } from "react-router-dom";
 
 const UserComplaints = () => {
+  const [complaintList, setComplaintList] = useState([]);
+  useEffect(() => {
+    Axios.get("http://3.144.145.92:3001/viewcomplaints").then((response) => {
+      setComplaintList(response.data);
+    });
+  }, []);
   return (
     <>
       <Navbar />
@@ -40,7 +47,7 @@ const UserComplaints = () => {
               </div>
             </div>
 
-            <div className="w-full xl:w-full mb-12 xl:mb-0 px-4 mt-8 ">
+            {/* <div className="w-full xl:w-full mb-12 xl:mb-0 px-4 mt-8 ">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1 bg-white mb-6 shadow-lg rounded">
                 <div class="grid grid-cols-3 gap-4 py-6">
                   <select
@@ -75,9 +82,9 @@ const UserComplaints = () => {
                   </select>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="w-full xl:w-full mb-12 xl:mb-0 px-4 ">
+            <div className="w-full xl:w-full mb-12 xl:mb-0 px-4 pt-8">
               <div className="relative w-full max-w-full flex-grow flex-1 mb-6 shadow-lg rounded">
                 <div class="flex flex-col">
                   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -119,50 +126,54 @@ const UserComplaints = () => {
                             </tr>
                           </thead>
                           <tbody class="bg-white divide-y divide-gray-200">
-                            <tr>
-                              <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                  <div class="flex-shrink-0 h-10 w-10">
-                                    <img
-                                      class="h-10 w-10 rounded-full"
-                                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                                      alt=""
-                                    />
-                                  </div>
-                                  <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">
-                                      Jane Cooper
+                            {complaintList.map((val, index) => {
+                              return (
+                                <tr>
+                                  <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                      <div class="flex-shrink-0 h-10 w-10">
+                                        <img
+                                          class="h-10 w-10 rounded-full"
+                                          src="https://carnbrae.com.au/wp-content/uploads/2021/05/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">
+                                          {val.userName}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                          {val.userId}
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div class="text-sm text-gray-500">
-                                      jane.cooper@example.com
+                                  </td>
+                                  <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                      {val.complaintType}
                                     </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                  Late Delivery
-                                </div>
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                  Late Delivery
-                                </div>
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                  Active
-                                </span>
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <button
-                                  type="submit"
-                                  class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                  Save
-                                </button>
-                              </td>
-                            </tr>
+                                  </td>
+                                  <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                      {val.complaint}
+                                    </div>
+                                  </td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                      {val.status == 1 ? "Active" : "InActive"}
+                                    </span>
+                                  </td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button
+                                      type="submit"
+                                      class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                      Resolve
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>

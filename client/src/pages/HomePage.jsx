@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
+import Axios from "axios";
 import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { Chart } from "react-google-charts";
 
 const HomePage = () => {
   const history = useHistory();
@@ -10,16 +12,26 @@ const HomePage = () => {
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail"));
 
-  const userDetails = () => {};
-
-  useEffect(() => {}, []);
-
   /*
   if (isAuth == false || isAuth == null) {
     console.log("User not logged into System");
   } else {
     console.log("User is Authorized");
   }*/
+
+  const exportdata = (e) => {
+    e.preventDefault();
+
+    Axios.post("http://3.144.145.92:3001/exportdata")
+      .then((response) => {
+        console.log("export started");
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("export err");
+        console.log(err);
+      });
+  };
 
   if (isAuth)
     return (
@@ -39,10 +51,10 @@ const HomePage = () => {
                         <div className="flex flex-wrap">
                           <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                              Traffic
+                              Total Number Dishes
                             </h5>
                             <span className="font-semibold text-xl text-blueGray-700">
-                              350,897
+                              116
                             </span>
                           </div>
                           <div className="relative w-auto pl-4 flex-initial">
@@ -53,10 +65,10 @@ const HomePage = () => {
                         </div>
                         <p className="text-sm text-blueGray-400 mt-4">
                           <span className="text-emerald-500 mr-2">
-                            <i className="fas fa-arrow-up"></i> 3.48%
+                            <i className="fas fa-arrow-up"></i> 34%
                           </span>
                           <span className="whitespace-nowrap">
-                            Since last month
+                            Than Last Week
                           </span>
                         </p>
                       </div>
@@ -68,10 +80,10 @@ const HomePage = () => {
                         <div className="flex flex-wrap">
                           <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                              New users
+                              No of Users
                             </h5>
                             <span className="font-semibold text-xl text-blueGray-700">
-                              2,356
+                              35
                             </span>
                           </div>
                           <div className="relative w-auto pl-4 flex-initial">
@@ -82,10 +94,10 @@ const HomePage = () => {
                         </div>
                         <p className="text-sm text-blueGray-400 mt-4">
                           <span className="text-red-500 mr-2">
-                            <i className="fas fa-arrow-down"></i> 3.48%
+                            <i className="fas fa-arrow-down"></i> 14%
                           </span>
                           <span className="whitespace-nowrap">
-                            Since last week
+                            Than Last Month
                           </span>
                         </p>
                       </div>
@@ -97,10 +109,10 @@ const HomePage = () => {
                         <div className="flex flex-wrap">
                           <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                              Sales
+                              No of Restaurants
                             </h5>
                             <span className="font-semibold text-xl text-blueGray-700">
-                              924
+                              11
                             </span>
                           </div>
                           <div className="relative w-auto pl-4 flex-initial">
@@ -111,10 +123,10 @@ const HomePage = () => {
                         </div>
                         <p className="text-sm text-blueGray-400 mt-4">
                           <span className="text-orange-500 mr-2">
-                            <i className="fas fa-arrow-down"></i> 1.10%
+                            <i className="fas fa-arrow-down"></i> 40%
                           </span>
                           <span className="whitespace-nowrap">
-                            Since yesterday
+                            Than Last Month
                           </span>
                         </p>
                       </div>
@@ -126,10 +138,10 @@ const HomePage = () => {
                         <div className="flex flex-wrap">
                           <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                              Performance
+                              Next Cycle
                             </h5>
                             <span className="font-semibold text-xl text-blueGray-700">
-                              49,65%
+                              12.00 AM
                             </span>
                           </div>
                           <div className="relative w-auto pl-4 flex-initial">
@@ -143,7 +155,7 @@ const HomePage = () => {
                             <i className="fas fa-arrow-up"></i> 12%
                           </span>
                           <span className="whitespace-nowrap">
-                            Since last month
+                            Upgrade Time
                           </span>
                         </p>
                       </div>
@@ -156,13 +168,13 @@ const HomePage = () => {
           <div className="px-4 md:px-10 mx-auto w-full -m-24">
             <div className="flex flex-wrap"></div>
             <div className="flex flex-wrap mt-4">
-              <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+              <div className="w-full xl:w-1/2 mb-12 xl:mb-0 px-4">
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                   <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
                       <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                         <h3 className="font-semibold text-base text-blueGray-700">
-                          Page visits
+                          New Restaurants
                         </h3>
                       </div>
                       <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -182,93 +194,93 @@ const HomePage = () => {
                       <thead>
                         <tr>
                           <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                            Page name
+                            Restaurant Name
                           </th>
                           <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                            Visitors
+                            Location
                           </th>
                           <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                            Unique users
+                            Owners Name
                           </th>
                           <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                            Bounce rate
+                            Contact
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            /argon/
+                            Cafe Nior
                           </th>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            4,569
+                            Nugegoda
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            340
+                            Prasad Dammika
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                            46,53%
+                            011 252 6584
                           </td>
                         </tr>
                         <tr>
                           <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            /argon/index.html
+                            Lounge 919
                           </th>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            3,985
+                            Maharagama
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            319
+                            Suresh Raina
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             <i className="fas fa-arrow-down text-orange-500 mr-4"></i>
-                            46,53%
+                            011 254 8759
                           </td>
                         </tr>
                         <tr>
                           <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            /argon/charts.html
+                            Tri Traingle
                           </th>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            3,513
+                            Colombo
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            294
+                            Matheesha Ileperuma
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             <i className="fas fa-arrow-down text-orange-500 mr-4"></i>
-                            36,49%
+                            011 458 6598
                           </td>
                         </tr>
                         <tr>
                           <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            /argon/tables.html
+                            Mom's Choice
                           </th>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            2,050
+                            Hashen Fernando
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            147
+                            Wadduwa
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                            50,87%
+                            077 254 8965
                           </td>
                         </tr>
                         <tr>
                           <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            /argon/profile.html
+                            Lakrasa Foods
                           </th>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            1,795
+                            Saman Fernando
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            190
+                            Panadura
                           </td>
                           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             <i className="fas fa-arrow-down text-red-500 mr-4"></i>
-                            46,53%
+                            011 987 5145
                           </td>
                         </tr>
                       </tbody>
@@ -276,13 +288,13 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full xl:w-4/12 px-4">
+              <div className="w-full xl:w-1/2 px-4">
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                   <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
                       <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                         <h3 className="font-semibold text-base text-blueGray-700">
-                          Social traffic
+                          Restaurant Registration
                         </h3>
                       </div>
                       <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -291,136 +303,42 @@ const HomePage = () => {
                           type="button"
                           style={{ transition: "all .15s ease" }}
                         >
-                          See all
+                          Start Process
                         </button>
                       </div>
                     </div>
                   </div>
                   <div className="block w-full overflow-x-auto">
                     {/* Projects table */}
-                    <table className="items-center w-full bg-transparent border-collapse">
-                      <thead className="thead-light">
-                        <tr>
-                          <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                            Referral
-                          </th>
-                          <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                            Visitors
-                          </th>
-                          <th
-                            className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-                            style={{ minWidth: "140px" }}
-                          ></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Facebook
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            1,480
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div className="flex items-center">
-                              <span className="mr-2">60%</span>
-                              <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                  <div
-                                    style={{ width: "60%" }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                                  ></div>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Facebook
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            5,480
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div className="flex items-center">
-                              <span className="mr-2">70%</span>
-                              <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-emerald-200">
-                                  <div
-                                    style={{ width: "70%" }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
-                                  ></div>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Google
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            4,807
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div className="flex items-center">
-                              <span className="mr-2">80%</span>
-                              <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
-                                  <div
-                                    style={{ width: "80%" }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
-                                  ></div>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            Instagram
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            3,678
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div className="flex items-center">
-                              <span className="mr-2">75%</span>
-                              <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-lightBlue-200">
-                                  <div
-                                    style={{ width: "75%" }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-lightBlue-500"
-                                  ></div>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            twitter
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            2,645
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <div className="flex items-center">
-                              <span className="mr-2">30%</span>
-                              <div className="relative w-full">
-                                <div className="overflow-hidden h-2 text-xs flex rounded bg-orange-200">
-                                  <div
-                                    style={{ width: "30%" }}
-                                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
-                                  ></div>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <Chart
+                      className="h-full"
+                      chartType="LineChart"
+                      loader={<div>Loading Chart</div>}
+                      data={[
+                        ["x", "Restaurants"],
+                        [0, 1],
+                        [1, 3],
+                        [2, 4],
+                        [3, 6],
+                        [4, 7],
+                        [5, 8],
+                        [6, 9],
+                        [7, 10],
+                        [8, 11],
+                        [9, 14],
+                        [10, 15],
+                        [11, 18],
+                      ]}
+                      options={{
+                        hAxis: {
+                          title: "Time",
+                        },
+                        vAxis: {
+                          title: "No Of Restaurant",
+                        },
+                      }}
+                      rootProps={{ "data-testid": "1" }}
+                    />
                   </div>
                 </div>
               </div>
