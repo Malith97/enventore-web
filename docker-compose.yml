@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+  react-app:
+    image: enventore-client
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-app
+    volumes:
+      - ./client/:/usr/src/app
+      - /usr/src/app/node_modules
+  api-server:
+    image: enventore-server
+    ports:
+      - "3001:3001"
+    networks:
+      - mern-app
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
+networks:
+  mern-app:
+    driver: bridge
